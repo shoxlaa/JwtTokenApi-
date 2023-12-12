@@ -47,14 +47,16 @@ namespace JwtTokenApi.Controllers
 
             string token = CreateToken(user); 
 
-            return Ok(user);
+            return Ok(token);
         }
 
+        //Add the role to claim
         private string CreateToken(User user)
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name , user.UserName)
+                new Claim(ClaimTypes.Name , user.UserName), 
+                new Claim(ClaimTypes.Role, "Admin")
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
